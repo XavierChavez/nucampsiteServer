@@ -5,6 +5,7 @@ const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 
+
 const config = require('./config.js');
 
 exports.local = passport.use(new LocalStrategy(User.authenticate()));
@@ -37,11 +38,11 @@ exports.jwtPassport = passport.use(
     )
 );
 
-module.exports.verifyAdmin = (request, response, next) => {
-    if (request.user.admin) {
+module.exports.verifyAdmin = (req, res, next) => {
+    if (req.user.admin) {
       next();
     } else {
-      response
+      res
         .status(403)
         .json({ msg: "Only admins are allowed to have access" });
     }
